@@ -11,4 +11,6 @@
 [submodule "deps/SDL"]
 	path = deps/SDL
 	url = https://github.com/libsdl-org/SDL.git
-	branch = docking
+[submodule "deps/jsoncons"]
+	path = deps/jsoncons
+	url = https://github.com/danielaparker/jsoncons.git
