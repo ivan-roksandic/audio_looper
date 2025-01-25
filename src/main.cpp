@@ -14,6 +14,9 @@
 #include <SDL3/SDL_opengl.h>
 #endif
 
+#include "implot.h"
+#include "implot3d.h"
+
 // This example doesn't compile with Emscripten yet! Awaiting SDL3 support.
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
@@ -89,8 +92,9 @@ int main(int, char**)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+    io.Fonts->AddFontFromFileTTF("../../assets/fonts/FiraCodeNerdFont-Regular.ttf", 22.0f);
+    
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
 
@@ -108,6 +112,9 @@ int main(int, char**)
     // Our state
     bool show_demo_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    ImPlot::CreateContext();
+    ImPlot3D::CreateContext();
 
     AudioLooper looper;
 
@@ -135,6 +142,7 @@ int main(int, char**)
             if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
         }
+        
         looper.Update();
         
         ImGui_ImplOpenGL3_NewFrame();
