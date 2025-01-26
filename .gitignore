@@ -1,4 +1,6 @@
+embuild/
 build/
+emsdk/
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles

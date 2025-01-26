@@ -380,10 +380,10 @@ public:
             ImGui::PopStyleColor();
           }
           if(ImGui::TableSetColumnIndex(1)) {
-            ImGui::Text("%" SDL_PRIu64, data.size());
+            ImGui::Text("%" SDL_PRIu64,(uint64_t) data.size());
           }
                if(ImGui::TableSetColumnIndex(2)) {
-            ImGui::Text("%" SDL_PRIu64, data.capacity());
+            ImGui::Text("%" SDL_PRIu64, (uint64_t) data.capacity());
           }
           ImGui::PopID();
         }
@@ -399,7 +399,7 @@ public:
     
     if(input_stream != nullptr) {
       int res = SDL_GetAudioStreamAvailable(input_stream);
-      SDL_Log("%i\n", res);
+      //SDL_Log("%i\n", res);
       while(res > 0) {
         Uint8 buf[1024];
         const int buf_read = SDL_GetAudioStreamData(input_stream, buf, sizeof(buf));

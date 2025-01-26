@@ -19,9 +19,11 @@
 
 // This example doesn't compile with Emscripten yet! Awaiting SDL3 support.
 #ifdef __EMSCRIPTEN__
-#include "../libs/emscripten/emscripten_mainloop_stub.h"
+#include "./emscripten/emscripten_mainloop_stub.h"
 #endif
 
+
+static AudioLooper looper;
 // Main code
 int main(int, char**)
 { 
@@ -93,10 +95,12 @@ int main(int, char**)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-    io.Fonts->AddFontFromFileTTF("../../assets/fonts/FiraCodeNerdFont-Regular.ttf", 22.0f);
+    io.Fonts->AddFontFromFileTTF("assets/fonts/FiraCodeNerdFont-Regular.ttf", 22.0f);
     
+
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
+
 
     ImGuiStyle& style = ImGui::GetStyle();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -116,7 +120,7 @@ int main(int, char**)
     ImPlot::CreateContext();
     ImPlot3D::CreateContext();
 
-    AudioLooper looper;
+    
 
     looper.Init();
 
@@ -142,14 +146,14 @@ int main(int, char**)
             if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
         }
-        
+
         looper.Update();
         
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-        looper.Draw();
+       looper.Draw();
 
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);

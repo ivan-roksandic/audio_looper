@@ -4,7 +4,13 @@ project("app")
 
 set(CMAKE_CXX_STANDARD 20)
 
+if(EMSCRIPTEN)
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+endif()
+
 add_subdirectory(deps/SDL)
+
+find_package(OpenGL REQUIRED)
 
 set(IMGUI_SOURCES
     deps/imgui/imgui_draw.cpp
@@ -29,7 +35,10 @@ set(IMGUI_SOURCES
 
 file(GLOB_RECURSE APP_SOURCES CMAKE_CONFIGURE_DEPENDS src/*.cpp)
 add_executable(app ${IMGUI_SOURCES} ${APP_SOURCES})
-target_link_libraries(app SDL3::SDL3 opengl32.lib)
+target_link_libraries(app SDL3::SDL3)
+if(EMSCRIPTEN)
+target_link_options(app PUBLIC --embed-file=../assets/ --shell-file=../src/emscripten/shell_minimal.html -sALLOW_MEMORY_GROWTH=1 -SFULL_ES3 -sMAX_WEBGL_VERSION=2)
+endif()
 target_include_directories(app PUBLIC
     include/
     src/
